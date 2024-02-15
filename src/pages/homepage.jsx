@@ -1,4 +1,4 @@
-
+import HomeCSS from "../styles/home.module.css"
 import axios from "axios"
 import {React, useState,useEffect } from 'react'
 import Button from "../components/Button"
@@ -14,9 +14,8 @@ function Homepage() {
   const fetchUser=async()=>{
       try {
           const response=await axios.get("https://jsonplaceholder.typicode.com/users")
-          // setData(response.data)
           
-          const updatedData=response.data.map(user=>({...user,isAdded:false}))
+          const updatedData=response.data.map(user=>({...user,isAdded:false,isAlreadyAdded:false}))
 
           setData(updatedData)
 
@@ -57,8 +56,9 @@ function Homepage() {
       if(error.response){
       console.log(error.response.data)
       if(error.response.data.msg=="already in database click open button"){
-        var isAddChange= data.map(ele=>(ele.email===user.email?{...ele,isAdded:true,PGid:error.response.data.id}:ele))
-        setData(isAddChange)
+        let isAlreadyAddChange= data.map(ele=>(ele.email===user.email?{...ele,isAlreadyAdded:true,PGid:error.response.data.id}:ele))
+        setData(isAlreadyAddChange)
+        console.log(data)
        }
       }
     }
@@ -67,19 +67,20 @@ function Homepage() {
 
   return (
     <div className="App">
-      <Heading/>
+      <Heading />
       <Button content="All Users" onClick={fetchUser}/>
       <div>
          {data.map((ele,index)=>(
-           <ul key={ele.id}>
+           <ul key={ele.id} className={HomeCSS.card}>
             <li><b>Name :</b>{ele.name}</li>
             <li><b>Email :</b>{ele.email}</li>
             <li><b>Phone :</b>{ele.phone}</li>
             <li><b>Website :</b>{ele.website}</li>
             <li><b>City :</b>{ele.address.city}</li>
             <li><b>Company :</b>{ele.company.name}</li>
-            {!ele.isAdded?<Button content="Add" type="click" onClick={()=>addUser(ele)}/>:<Button content="open" type="click" onClick={()=>navigate(`/post/${ele.PGid}`,{state:{jsonId:ele.id}})}/>}
-            
+            {ele.isAdded || ele.isAlreadyAdded?<Button content="open" type="click" onClick={()=>navigate(`/post/${ele.PGid}`,{state:{jsonId:ele.id}})}/>:<Button content="Add" type="click" onClick={()=>addUser(ele)}/>}
+
+            {ele.isAlreadyAdded? <h5>Already added click open button</h5> : (ele.isAdded?<h5>added to database</h5>:null)}
            </ul>        
          ))}
       </div>

@@ -1,8 +1,9 @@
 import React from 'react'
+import HomeCSS from "../styles/home.module.css"
 
 function Button(props) {
   return (
-    <button onClick={props.onClick}  type={props.type}>
+    <button className={HomeCSS.buttons} onClick={props.onClick}  type={props.type}>
       {props.content}
     </button>
   )

@@ -1,8 +1,8 @@
 import React from 'react'
-
+import HomeCSS from "../styles/home.module.css"
 function Heading() {
   return (
-    <div>Cointab
+    <div className={HomeCSS.heading}>Cointab
     SE-ASSIGNMENT</div>
   )
 }

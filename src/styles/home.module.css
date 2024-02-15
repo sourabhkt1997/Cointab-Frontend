@@ -1,0 +1,15 @@
+.buttons{
+    background-color: antiquewhite;
+    border-radius: 5px;
+    font-size: medium;
+}
+.heading{
+    font-weight: 700;
+    color: rgb(142, 18, 30);
+    margin:10px ;
+}
+.card{
+    background-color: aliceblue;
+    padding: 5px;
+
+}

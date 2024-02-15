@@ -1,9 +1,13 @@
+import PostpageCss from "../styles/post.module.css"
+
 import {React, useState,useEffect } from 'react'
 import { json, useLocation ,useParams} from 'react-router-dom';
 import axios from "axios"
 import Heading from "../components/Heading"
 import Button from "../components/Button"
 let baseurl="https://cointabbackend-xg88.onrender.com"
+
+
 
 function Postpage() {
 
@@ -93,15 +97,16 @@ function Postpage() {
   
 
   return (
-    <div>
+    <div >
       <Heading/>
       <p><b>{name}</b>'s post are showing here`</p>
+
       {!isAdded? <Button content="Bulk Add" onClick={bulkAdd}/>: <Button content="Download in Excel" onClick={download}/>}
      
       <div>
          {
           data.map(ele=>(
-            <div key={ele.id}>
+            <div key={ele.id} className={PostpageCss.card}>
                 <p>Name : {name}</p>
                 <p>Title : {ele.title}</p>
                 <p>Body : {ele.body}</p>
